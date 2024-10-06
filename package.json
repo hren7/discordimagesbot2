@@ -17,7 +17,7 @@
   "author": "HR",
   "license": "ISC",
   "bin": {
-    "twitter-images": "./app.js"
+    "twitter-images": "app.js"
   },
   "bugs": {
     "url": "https://github.com/hren7/discordimagesbot/issues"
