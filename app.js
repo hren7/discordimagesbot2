@@ -1,4 +1,3 @@
-#!/usr/bin/env node // for *nix systems, ignored in windows
 
 const token = require("./token.js"); // import
 

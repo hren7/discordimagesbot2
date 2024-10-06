@@ -1,7 +1,8 @@
 # Discord Images Bot
+## discordimagesbot2
+
 Twitter Images Bot for Discord
 
-## discordimagesbot
 Attempt at creating a discord bot to extract images from Twitter.
 
 When mentioned, the bot takes the first twitter link sent by the user and extracts all images from it, sending it into the channel.
@@ -16,8 +17,7 @@ Features:
   - take only the first twitter link if there's more than one
 - access the twitter link and find all images in the tweet
 - extract and send all images in discord, along with the original message (excluding the mention of the bot)
-  - e.g. original message was: x.com/someuser/status/1234567 some_message_here @Twitter Images
-  - the ping may be anywhere
+  - e.g. original message was: x.com/someuser/status/1234567 some_message_here @Twitter Images (the ping may be anywhere)
   - the response should be: x.com/someuser/status/1234567 some_message_here [image attachments]
 - respond appropriately if no images found
 - can:
@@ -45,8 +45,4 @@ Features left to work on:
 - respond to messages containing only the bot mention, where the user is replying to a message containing a suitable witter link, and extract images from there, replying to the message that contained the link
 
 ## Notes
-Run using node app.js in directory or twitter-images (runs anywhere after using npm link).
-
-Uses puppeteer to access and extract images from twitter.
-
-*node modules folder and token file ignored
+Run using node app.js in directory or twitter-images.
