@@ -98,7 +98,9 @@ client.on('messageCreate', async(message) => {
         // create new attachments array from images
         const attachments = images.map(imagesrc => {
             // send og/large image instead of compressed
-            const newsrc = imagesrc.split('?format=jpg')[0] + '?format=jpg&name=large';
+            const splitsrc = imagesrc.split('?format=');
+            const srctype = splitsrc[1].split('&')[0]; // find file type
+            const newsrc = splitsrc[0] + `?format=${srctype}&name=large`;
             const attachment = new AttachmentBuilder(newsrc, {name: `${newsrc}.jpg`});
             console.log('Attachment:', attachment); // TEMP check
             return attachment; // explicit return needed
@@ -119,10 +121,4 @@ client.on('messageCreate', async(message) => {
 
 
 client.login(token);
-
-
-// Twitter images examples
-// <img alt="Image" draggable="true" src="https://pbs.twimg.com/media/GTgkRGqbAAALZF0?format=jpg&amp;name=900x900" class="css-9pa8cd">
-// <img alt="Image" draggable="true" src="https://pbs.twimg.com/media/GVBf3zcasAAa9OL?format=jpg&amp;name=medium" class="css-9pa8cd">
-// <img alt="Image" draggable="true" src="https://pbs.twimg.com/media/GWrkp13bcAA-DrP?format=jpg&amp;name=900x900" class="css-9pa8cd">
 

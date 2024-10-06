@@ -40,6 +40,9 @@ Features:
 - Add <> around the twitter link the images were taken from to remove the discord embed for that link only
 - Message replaced with '^' and twitter link used instead of original message
 
+#### Version 2.2
+- Fix issues with other image types e.g. png
+
 Features left to work on:
 - handle no images; ignore images that are part of quote retweets
 - respond to messages containing only the bot mention, where the user is replying to a message containing a suitable witter link, and extract images from there, replying to the message that contained the link
