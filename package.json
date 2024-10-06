@@ -1,0 +1,30 @@
+{
+  "name": "discordimagesbot",
+  "version": "1.0.0",
+  "description": "Extract twitter images",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hren7/discordimagesbot.git"
+  },
+  "keywords": [
+    "images"
+  ],
+  "author": "HR",
+  "license": "ISC",
+  "bin": {
+    "twitter-images": "./app.js"
+  },
+  "bugs": {
+    "url": "https://github.com/hren7/discordimagesbot/issues"
+  },
+  "homepage": "https://github.com/hren7/discordimagesbot#readme",
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "puppeteer": "^23.5.0"
+  }
+}
