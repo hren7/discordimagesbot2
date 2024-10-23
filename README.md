@@ -5,19 +5,20 @@ Twitter Images Bot for Discord
 
 Attempt at creating a discord bot to extract images from Twitter.
 
-When mentioned, the bot takes the first twitter link sent by the user and extracts all images from it, sending it into the channel.
+When mentioned, the bot takes the twitter link/s sent by the user and extracts all images from it, sending it into the channel.
 
 ## Usage
 Run using node app.js in directory or twitter-images.
 
 ## Changelog
+### Version 0.2.3
+Added:
+- Extract images from all twitter links in a message - if none of them have images then send no images found
+  - If only some have images, send only those links and ignore the others
+
 ### Version 0.2.2
 Fixed:
 - Fix issues with other image types e.g. png
-
-Features left to work on:
-- handle no images; ignore images that are part of quote retweets
-- respond to messages containing only the bot mention, where the user is replying to a message containing a suitable witter link, and extract images from there, replying to the message that contained the link
 
 ### Version 0.2.1
 Fixed:
@@ -26,7 +27,8 @@ Fixed:
 - Message replaced with '^' and twitter link used instead of original message
 
 ### Version 0.2.0
-Discord.js updated to ver 14.16.3. Code updated to work with new version e.g. added intents.
+Fixed:
+- Discord.js updated to ver 14.16.3. Code updated to work with new version e.g. added intents.
 
 Added:
 - the bot can now respond to messages in threads
@@ -46,3 +48,8 @@ Features:
 - can:
   - extract and send 1 image
   - extract and send all/multiple images
+
+## Possible Future Features:
+- handle no images; ignore images that are part of quote retweets
+- respond to messages containing only the bot mention, where the user is replying to a message containing a suitable twitter link, and extract images from all links there, replying to the message that contained the link/s
+- extract images from spoilered images - this is difficult because non-logged in users generally aren't able to view spoilered images

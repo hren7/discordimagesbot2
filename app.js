@@ -37,9 +37,9 @@ function extractLink(message) {
 
     if (urls) {
         console.log('URLs found:', urls); // urls is an array of all urls
-        return urls[0]; // return first URL found
+        return urls; // return all urls
     } else {
-        return 0;
+        return []; // empty array
     }
 }
 
@@ -52,7 +52,7 @@ async function extractImages(link) {
 
     // go to specified url
     await page.goto(link, { waitUntil: 'networkidle2' }); 
-    // wait for the network to be idle to ensure complete content load
+    // wait for the network to be idle 2 to ensure complete content load
 
     // extract images from page
     const images = await page.evaluate(() => {
@@ -62,6 +62,10 @@ async function extractImages(link) {
         // no log here bcs logging to browser console not needed
     });
 
+    // close browser
+    await browser.close();
+    console.log(`Closing browser...`);
+
     // check how many images were found
     if (images.length === 0) {
         console.log('No images found.');
@@ -69,10 +73,6 @@ async function extractImages(link) {
         console.log("Images found:", images.length);
         console.log("Image sources:", images); // links instead of template literals
     }
-
-    // close browser
-    await browser.close();
-    console.log(`Closing browser...`);
 
     return images;
 }
@@ -82,18 +82,33 @@ client.on('messageCreate', async(message) => {
     // if (message.content.startsWith('sometext')) {}
     if (message.author.bot) return; // ignore messages sent by bots
 
+    else if (message.content.trim() === `<@${client.user.id}>`) {
+        message.channel.send("This hasn't been implemented yet!");
+    }
+
     // check if the bot is mentioned in the message
-    if (message.mentions.has(client.user)) {
-        let twitterLink = "";
+    else if (message.mentions.has(client.user)) {
+        let twitterLinks = [];
         // loose equality
-        if ((twitterLink = extractLink(message)) == 0) {
-            message.channel.send("No twitter link found.");
+        if ((twitterLinks = extractLink(message)).length == 0) {
+            message.channel.send("*No twitter link found.*");
             return
         }
-        // add twitter link without embed
-        const newMessage = `^\n<${twitterLink}>`;
 
-        const images = await extractImages(twitterLink);
+        let images = [];
+        for (const link of twitterLinks) {
+            const newImages = await extractImages(link);
+            if (newImages.length > 0) {
+                // ... is the spread operator to spread the elements of an array
+                images.push(...newImages);
+            } else {
+                twitterLinks = twitterLinks.filter(item => item != link);
+            }
+        }
+
+        // add twitter link without embed
+        const messageLinks = twitterLinks.map(link => `<${link}>`).join('\n');
+        const newMessage = `^\n${messageLinks}`;
 
         // create new attachments array from images
         const attachments = images.map(imagesrc => {
@@ -102,14 +117,14 @@ client.on('messageCreate', async(message) => {
             const srctype = splitsrc[1].split('&')[0]; // find file type
             const newsrc = splitsrc[0] + `?format=${srctype}&name=large`;
             const attachment = new AttachmentBuilder(newsrc, {name: `${newsrc}.jpg`});
-            console.log('Attachment:', attachment); // TEMP check
+            //console.log('Attachment:', attachment); // TEMP check
             return attachment; // explicit return needed
         });
         
         if (attachments.length > 0) {
             try {
                 await message.channel.send({content: newMessage,  files: attachments});
-                console.log(`Attachment/s sent in channel ${message.channel.name}`);
+                console.log(`Attachment/s sent in channel ${message.channel.name}!`);
             } catch (error) {
                 console.error("Error sending images", error);
             }
